@@ -1,11 +1,13 @@
-import { useState } from 'react'
 import { Login } from './components/Login'
+import { UserDataProvider } from './contexts/UserDataCtx'
 
 function App() {
 
   return (
     <>
-      <Login />
+      <UserDataProvider>
+        <Login />
+      </UserDataProvider>
     </>
   )
 }
