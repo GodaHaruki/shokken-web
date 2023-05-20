@@ -3,16 +3,14 @@ import Dexie from 'dexie'
 export const DB = new Dexie("AppDB")
 
 DB.version(1).stores({
-  cache: "&name, data"
+  cache: "&name, value"
 })
 
-export type Cache = {
+export type Cache<T> = {
   name: string
-  data: any
+  value: T
 }
 
 // todo! add put function to check type
 
 export const cache = DB.table("cache")
-
-
