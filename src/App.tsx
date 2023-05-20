@@ -1,14 +1,16 @@
 import { Login } from './components/Login'
-import { useUserDataContext } from './contexts/UserDataCtx'
+import { Logined } from './routing/Auth'
 
 
 function App() {
-  const {setIsLogin, getIsLogin} = useUserDataContext()
   return (
     <>
-    <button onClick={() => setIsLogin(false)}>Logout</button>
-    {getIsLogin()? <>Logined</>:<Login />}
-
+      {/* route="home or anything like this" */}
+      <Logined checkingIsLogin={"loading"}>
+        Logined
+      </Logined>
+      {/* route="./login" */}
+      <Login />
     </>
   )
 }
