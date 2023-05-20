@@ -1,5 +1,5 @@
 import { useContext, createContext } from "react";
-import { cache, Cache } from "./db";
+import { cache, Cache } from "../lib/db";
 import { IndexableType, PromiseExtended } from "dexie";
 
 export type UserUtil = {
