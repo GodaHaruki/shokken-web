@@ -10,6 +10,22 @@ export type UserUtil = {
   getUserName: () => Promise<string | undefined>
 }
 
+const UserDataCtx = createContext<UserUtil>({
+  setIsLogin: function (_arg0: boolean): PromiseExtended<IndexableType> {
+    throw new Error("Function not implemented.");
+  },
+  getIsLogin: function (): Promise<boolean> {
+    throw new Error("Function not implemented.");
+  },
+  setUserName: function (_arg0: string): PromiseExtended<IndexableType> {
+    throw new Error("Function not implemented.");
+  },
+  getUserName: function (): Promise<string> {
+    throw new Error("Function not implemented.");
+  }
+}
+)
+
 export function useUserDataContext() {
   return useContext(UserDataCtx);
 }
@@ -56,19 +72,3 @@ export function UserDataProvider({ children }: any) {
     </UserDataCtx.Provider>
   )
 }
-
-const UserDataCtx = createContext<UserUtil>({
-  setIsLogin: function (_arg0: boolean): PromiseExtended<IndexableType> {
-    throw new Error("Function not implemented.");
-  },
-  getIsLogin: function (): Promise<boolean> {
-    throw new Error("Function not implemented.");
-  },
-  setUserName: function (_arg0: string): PromiseExtended<IndexableType> {
-    throw new Error("Function not implemented.");
-  },
-  getUserName: function (): Promise<string> {
-    throw new Error("Function not implemented.");
-  }
-}
-)
