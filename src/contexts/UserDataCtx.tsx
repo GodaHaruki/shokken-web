@@ -1,17 +1,13 @@
-import { useRef, useContext, createContext, useEffect } from "react";
+import { useRef, useContext, createContext } from "react";
 import { cache, Cache } from "./db";
-
-type User = {
-  isLogin: boolean
-  userName: string | undefined
-}
+import { IndexableType, PromiseExtended } from "dexie";
 
 type UserUtil = {
-  setIsLogin: (arg0: boolean) => void
-  getIsLogin: () => boolean
+  setIsLogin: (arg0: boolean) => PromiseExtended<IndexableType>
+  getIsLogin: () => Promise<boolean>
 
-  setUserName: (arg0: string) => void
-  getUserName: () => string | undefined
+  setUserName: (arg0: string) => PromiseExtended<IndexableType>
+  getUserName: () => Promise<string | undefined>
 }
 
 export function useUserDataContext() {
@@ -19,46 +15,34 @@ export function useUserDataContext() {
 }
 
 export function UserDataProvider({ children }: any) {
-  const data = useRef<User>({ isLogin: false, userName: undefined }) // todo! read from cache db
-  // useEffect(() => {
-  //   cache.get("isLogin").then(e => {
-  //     if(e != undefined){
-  //       data.current.isLogin = (e as Cache<boolean>).value
-  //       console.log(JSON.stringify(e))
-  //       console.log((e as Cache<boolean>).value)
-  //     }
-  //   })
-  // },[])
-      cache.get("isLogin").then(e => {
-      if(e != undefined){
-        data.current.isLogin = (e as Cache<boolean>).value
-        console.log(JSON.stringify(e))
-        console.log((e as Cache<boolean>).value)
-      }
-    })
-  
-  function setIsLogin(b: boolean) { // todo! add to cache db
-    cache.put({
+  function setIsLogin(b: boolean) {
+    return cache.put({
       name: "isLogin",
       value: b
     })
-    data.current.isLogin = b
   }
 
-  function getIsLogin() {
-    return data.current.isLogin
+  async function getIsLogin() {
+    const res = await cache.get("isLogin")
+    if (res != undefined) {
+      return (res as Cache<boolean>).value;
+    }
+    return false;
   }
 
-  function setUserName(name: string) { // todo! add to cache db
-    cache.put({
-      name:"userName",
-      value:name
+  function setUserName(name: string) {
+    return cache.put({
+      name: "userName",
+      value: name
     })
-    data.current.userName = name
   }
 
-  function getUserName() {
-    return data.current.userName
+  async function getUserName() {
+    const res = await cache.get("userName")
+    if (res != undefined) {
+      return (res as Cache<string>).value;
+    }
+    return undefined;
   }
 
   return (
@@ -74,16 +58,16 @@ export function UserDataProvider({ children }: any) {
 }
 
 const UserDataCtx = createContext<UserUtil>({
-  setIsLogin: function (_arg0: boolean): void {
+  setIsLogin: function (_arg0: boolean): PromiseExtended<IndexableType> {
     throw new Error("Function not implemented.");
   },
-  getIsLogin: function (): boolean {
+  getIsLogin: function (): Promise<boolean> {
     throw new Error("Function not implemented.");
   },
-  setUserName: function (_arg0: string): void {
+  setUserName: function (_arg0: string): PromiseExtended<IndexableType> {
     throw new Error("Function not implemented.");
   },
-  getUserName: function (): string {
+  getUserName: function (): Promise<string> {
     throw new Error("Function not implemented.");
   }
 }
