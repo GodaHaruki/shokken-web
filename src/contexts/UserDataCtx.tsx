@@ -1,4 +1,4 @@
-import { useRef, useContext, createContext } from "react";
+import { useContext, createContext } from "react";
 import { cache, Cache } from "./db";
 import { IndexableType, PromiseExtended } from "dexie";
 
