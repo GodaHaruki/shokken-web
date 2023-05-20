@@ -2,7 +2,7 @@ import { useContext, createContext } from "react";
 import { cache, Cache } from "./db";
 import { IndexableType, PromiseExtended } from "dexie";
 
-type UserUtil = {
+export type UserUtil = {
   setIsLogin: (arg0: boolean) => PromiseExtended<IndexableType>
   getIsLogin: () => Promise<boolean>
 
