@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { useUserDataContext } from "../contexts/UserDataCtx"
+import { UserUtil, useUserDataContext } from "../contexts/UserDataCtx"
 
 export function Login() {
   const email = useRef<string>("")
@@ -17,7 +17,7 @@ export function Login() {
           <form className="m-3 h-auto w-auto rounded-md border border-gray-300 p-3 px-6">
             <div className="my-2">
               <label htmlFor="email" className="mb-2 block">email address</label>
-              <input id="email" type="email" onChange={(e) => email.current = e.target.value} className="input-bordered input input-sm w-full max-w-xs" />
+              <input id="email" type="email" autoComplete="email" onChange={(e) => email.current = e.target.value} className="input-bordered input input-sm w-full max-w-xs" />
             </div>
 
             <div className="my-3">
@@ -29,7 +29,7 @@ export function Login() {
 
             </div>
 
-            <button type="button" onClick={(_e) => {handleOnClick(f,email.current, password.current); console.log(f.getIsLogin())}} className="btn-primary btn-sm btn mt-2 w-full text-xs">login</button>
+            <button type="button" onClick={(_e) => {handleOnClick(f,email.current, password.current); f.getIsLogin().then(v => console.log(v))}} className="btn-primary btn-sm btn mt-2 w-full text-xs">login</button>
           </form>
         </div>
       </div>
@@ -37,7 +37,7 @@ export function Login() {
   )
 }
 
-function handleOnClick(f:{setIsLogin: (b:boolean) => void, setUserName: (s: string) => void}, email: string, password: string) {
+async function handleOnClick(f: UserUtil, email: string, password: string) {
   // todo!
   console.log("email: ", email)
   console.log("password: ", password)
@@ -46,8 +46,7 @@ function handleOnClick(f:{setIsLogin: (b:boolean) => void, setUserName: (s: stri
   // if success
   // setIsLogin(true)
   // else
-  f.setIsLogin(true)
-  f.setUserName("guest")
+  Promise.all([f.setIsLogin(true),f.setUserName("guest")])
 
   // fetch
   // setUserName(name)
