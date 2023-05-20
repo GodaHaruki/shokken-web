@@ -1,13 +1,14 @@
 import { Login } from './components/Login'
-import { UserDataProvider } from './contexts/UserDataCtx'
+import { useUserDataContext } from './contexts/UserDataCtx'
+
 
 function App() {
-
+  const {setIsLogin, getIsLogin} = useUserDataContext()
   return (
     <>
-      <UserDataProvider>
-        <Login />
-      </UserDataProvider>
+    <button onClick={() => setIsLogin(false)}>Logout</button>
+    {getIsLogin()? <>Logined</>:<Login />}
+
     </>
   )
 }
