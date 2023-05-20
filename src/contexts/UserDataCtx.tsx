@@ -1,5 +1,5 @@
 import { useRef, useContext, createContext, useEffect } from "react";
-import { cache } from "./db";
+import { cache, Cache } from "./db";
 
 type User = {
   isLogin: boolean
@@ -20,8 +20,28 @@ export function useUserDataContext() {
 
 export function UserDataProvider({ children }: any) {
   const data = useRef<User>({ isLogin: false, userName: undefined }) // todo! read from cache db
-
+  // useEffect(() => {
+  //   cache.get("isLogin").then(e => {
+  //     if(e != undefined){
+  //       data.current.isLogin = (e as Cache<boolean>).value
+  //       console.log(JSON.stringify(e))
+  //       console.log((e as Cache<boolean>).value)
+  //     }
+  //   })
+  // },[])
+      cache.get("isLogin").then(e => {
+      if(e != undefined){
+        data.current.isLogin = (e as Cache<boolean>).value
+        console.log(JSON.stringify(e))
+        console.log((e as Cache<boolean>).value)
+      }
+    })
+  
   function setIsLogin(b: boolean) { // todo! add to cache db
+    cache.put({
+      name: "isLogin",
+      value: b
+    })
     data.current.isLogin = b
   }
 
@@ -30,6 +50,10 @@ export function UserDataProvider({ children }: any) {
   }
 
   function setUserName(name: string) { // todo! add to cache db
+    cache.put({
+      name:"userName",
+      value:name
+    })
     data.current.userName = name
   }
 
