@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import { useUserDataContext } from "../contexts/UserDataCtx"
-import { Login } from "../components/Login"
+import React, { useState } from 'react'
+import { useUserDataContext } from '../contexts/UserDataCtx'
+import { Login } from '../components/Login'
 
 type LoginedProps = {
   children: React.ReactNode
@@ -28,7 +28,7 @@ export function Logined(props: LoginedProps) {
   //   setTimeout(async () => resolve(await getIsLogin()), 3000)
   // })
 
-  getIsLogin().then(v => {
+  getIsLogin().then((v) => {
     if (v) {
       setView(props.children)
     } else {
@@ -36,24 +36,20 @@ export function Logined(props: LoginedProps) {
     }
   })
 
-  return (
-    <>
-      {view}
-    </>
-  )
+  return <>{view}</>
 }
 
 type LoginedOrProps = {
-  children: React.ReactNode,
-  or: React.ReactNode,
+  children: React.ReactNode
+  or: React.ReactNode
 }
 
-export function LoginedOr(props: LoginedOrProps){
+export function LoginedOr(props: LoginedOrProps) {
   const [view, setView] = useState<React.ReactNode>(<Loading />)
 
   const { getIsLogin } = useUserDataContext()
 
-  getIsLogin().then(v => {
+  getIsLogin().then((v) => {
     if (v) {
       setView(props.children)
     } else {
@@ -61,9 +57,5 @@ export function LoginedOr(props: LoginedOrProps){
     }
   })
 
-  return (
-    <>
-      {view}
-    </>
-  )
+  return <>{view}</>
 }

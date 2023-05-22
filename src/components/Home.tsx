@@ -1,11 +1,11 @@
-import Header from "./Header";
+import Header from './Header'
 
-function Home(){
+function Home() {
   return (
     <>
-    <Header />
+      <Header />
     </>
   )
 }
 
-export default Home;
+export default Home

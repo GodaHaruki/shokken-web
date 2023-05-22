@@ -7,7 +7,7 @@ import { UserDataProvider } from './contexts/UserDataCtx.tsx'
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <UserDataProvider>
-    <App />
+      <App />
     </UserDataProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )

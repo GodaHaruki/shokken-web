@@ -1,6 +1,6 @@
-import { useContext, createContext } from "react";
-import { cache, Cache } from "../lib/db";
-import { IndexableType, PromiseExtended } from "dexie";
+import { useContext, createContext } from 'react'
+import { cache, Cache } from '../lib/db'
+import { IndexableType, PromiseExtended } from 'dexie'
 
 export type UserUtil = {
   setIsLogin: (arg0: boolean) => PromiseExtended<IndexableType>
@@ -12,62 +12,63 @@ export type UserUtil = {
 
 const UserDataCtx = createContext<UserUtil>({
   setIsLogin: function (_arg0: boolean): PromiseExtended<IndexableType> {
-    throw new Error("Function not implemented.");
+    throw new Error('Function not implemented.')
   },
   getIsLogin: function (): Promise<boolean> {
-    throw new Error("Function not implemented.");
+    throw new Error('Function not implemented.')
   },
   setUserName: function (_arg0: string): PromiseExtended<IndexableType> {
-    throw new Error("Function not implemented.");
+    throw new Error('Function not implemented.')
   },
   getUserName: function (): Promise<string> {
-    throw new Error("Function not implemented.");
+    throw new Error('Function not implemented.')
   }
-}
-)
+})
 
 export function useUserDataContext() {
-  return useContext(UserDataCtx);
+  return useContext(UserDataCtx)
 }
 
 export function UserDataProvider({ children }: any) {
   function setIsLogin(b: boolean) {
     return cache.put({
-      name: "isLogin",
+      name: 'isLogin',
       value: b
     })
   }
 
   async function getIsLogin() {
-    const res = await cache.get("isLogin")
+    const res = await cache.get('isLogin')
     if (res != undefined) {
-      return (res as Cache<boolean>).value;
+      return (res as Cache<boolean>).value
     }
-    return false;
+    return false
   }
 
   function setUserName(name: string) {
     return cache.put({
-      name: "userName",
+      name: 'userName',
       value: name
     })
   }
 
   async function getUserName() {
-    const res = await cache.get("userName")
+    const res = await cache.get('userName')
     if (res != undefined) {
-      return (res as Cache<string>).value;
+      return (res as Cache<string>).value
     }
-    return undefined;
+    return undefined
   }
 
   return (
-    <UserDataCtx.Provider value={{
-      setIsLogin: setIsLogin,
-      getIsLogin: getIsLogin,
-      setUserName: setUserName,
-      getUserName: getUserName,
-    }}>
+    <UserDataCtx.Provider
+      value={{
+        setIsLogin: setIsLogin,
+        getIsLogin: getIsLogin,
+        setUserName: setUserName,
+        getUserName: getUserName
+      }}
+    >
       {children}
     </UserDataCtx.Provider>
   )

@@ -2,7 +2,6 @@
 import Home from './components/Home'
 import { Logined } from './routing/Auth'
 
-
 function App() {
   return (
     <>
