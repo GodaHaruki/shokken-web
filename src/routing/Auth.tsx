@@ -9,8 +9,8 @@ type LoginedProps = {
 function Loading() {
   return (
     <>
-      <div className="w-screen h-screen flex flex-col items-center justify-center">
-        <div className="animate-spin rounded-full border-t-transparent border-[1.5px] border-blue-500 h-5 w-5" />
+      <div className="flex h-screen w-screen flex-col items-center justify-center">
+        <div className="h-5 w-5 animate-spin rounded-full border-[1.5px] border-blue-500 border-t-transparent" />
         <div>Loading</div>
       </div>
     </>
@@ -33,6 +33,31 @@ export function Logined(props: LoginedProps) {
       setView(props.children)
     } else {
       setView(<Login />)
+    }
+  })
+
+  return (
+    <>
+      {view}
+    </>
+  )
+}
+
+type LoginedOrProps = {
+  children: React.ReactNode,
+  or: React.ReactNode,
+}
+
+export function LoginedOr(props: LoginedOrProps){
+  const [view, setView] = useState<React.ReactNode>(<Loading />)
+
+  const { getIsLogin } = useUserDataContext()
+
+  getIsLogin().then(v => {
+    if (v) {
+      setView(props.children)
+    } else {
+      setView(props.or)
     }
   })
 
